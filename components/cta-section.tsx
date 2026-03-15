@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Zap, ArrowRight, Swords } from "lucide-react"
+import { Zap, ArrowRight, Swords, Linkedin, Mail, X as XIcon } from "lucide-react"
 import Link from "next/link"
 
 export function CtaSection() {
@@ -63,9 +63,6 @@ export function CtaSection() {
     </section>
   )
 }
-
-import Link from "next/link"
-import { Swords, Linkedin, Mail, X as XIcon } from "lucide-react"
 
 export function Footer() {
   return (
