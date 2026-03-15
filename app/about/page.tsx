@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
-import { CTA } from "@/components/cta-section"
+import { CtaSection } from "@/components/cta-section"
 import { Globe, Target, Zap, Users, Award, Heart } from "lucide-react"
 
 const values = [
@@ -200,7 +200,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <CTA />
+      <CtaSection />
     </main>
   )
 }
