@@ -52,10 +52,22 @@ export function TestimonialsSection() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length)
 
   return (
-    <section ref={ref} className="py-24 bg-card/30 border-y border-border">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left: trust stats */}
+    <section ref={ref} className="py-24 relative overflow-hidden bg-gradient-to-b from-background via-surface-soft to-background border-y border-border">
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
+
+      <div className="relative max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <div className="inline-block mb-4 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-widest">
+            Customer Testimonials
+          </div>
+          <h2 className="text-4xl font-bold text-foreground mb-3">Trusted by industry leaders</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Business owners and marketing professionals use Rank Royale to dominate their local search results
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+          {/* Left: Social proof stats */}
           <div
             style={{
               opacity: visible ? 1 : 0,
@@ -63,51 +75,49 @@ export function TestimonialsSection() {
               transition: "opacity 0.6s ease, transform 0.6s ease",
             }}
           >
-            <h2 className="text-3xl font-bold text-foreground mb-3">Trusted by business owners</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-              Business owners use our tool to discover why competitors rank higher in Google and what to improve first.
-            </p>
-
-            {/* Avatar stack */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex -space-x-2">
-                {["JW", "SC", "MR", "ET"].map((initials, i) => (
-                  <div
-                    key={i}
-                    className="w-9 h-9 rounded-full bg-secondary border-2 border-background flex items-center justify-center text-xs font-bold text-foreground"
-                    style={{ zIndex: 4 - i }}
-                  >
-                    {initials}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1 mb-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 fill-primary text-primary" />
+            {/* Avatar stack with ratings */}
+            <div className="mb-8 p-6 rounded-xl bg-surface-raised border border-border">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex -space-x-3">
+                  {["JW", "SC", "MR", "ET"].map((initials, i) => (
+                    <div
+                      key={i}
+                      className="w-11 h-11 rounded-full bg-gradient-to-br from-primary/30 to-orange-500/20 border-2 border-background flex items-center justify-center text-xs font-bold text-foreground"
+                      style={{ zIndex: 4 - i }}
+                    >
+                      {initials}
+                    </div>
                   ))}
                 </div>
-                <p className="text-xs font-semibold text-foreground">100+ Reviews</p>
-                <p className="text-xs text-muted-foreground">Average 4.87 stars</p>
+                <div>
+                  <div className="flex items-center gap-1 mb-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-sm font-semibold text-foreground">100+ Five-Star Reviews</p>
+                  <p className="text-xs text-muted-foreground">Average 4.9/5 rating</p>
+                </div>
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* Stats grid */}
+            <div className="grid grid-cols-3 gap-3">
               {[
-                { value: "2.4k+", label: "Reports Generated" },
-                { value: "94%", label: "Rank Improvement" },
-                { value: "3 wks", label: "Avg. Time to Results" },
+                { value: "2.4k+", label: "Reports", subtext: "Generated" },
+                { value: "94%", label: "Improvement", subtext: "In rankings" },
+                { value: "3 wks", label: "Average", subtext: "To results" },
               ].map((stat) => (
-                <div key={stat.label} className="p-3 rounded-lg bg-secondary border border-border text-center">
-                  <div className="text-lg font-black text-primary">{stat.value}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
+                <div key={stat.label} className="p-4 rounded-lg bg-surface-raised border border-border/50 hover:border-primary/40 transition-colors text-center group">
+                  <div className="text-2xl font-black text-primary group-hover:scale-110 transition-transform">{stat.value}</div>
+                  <div className="text-xs font-medium text-foreground mt-1">{stat.label}</div>
+                  <div className="text-[10px] text-muted-foreground">{stat.subtext}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: testimonial carousel */}
+          {/* Right: Testimonial carousel */}
           <div
             style={{
               opacity: visible ? 1 : 0,
@@ -115,51 +125,69 @@ export function TestimonialsSection() {
               transition: "opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s",
             }}
           >
-            <div className="relative p-6 rounded-2xl bg-card border border-border min-h-[200px]">
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(testimonials[current].stars)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                ))}
-              </div>
+            <div className="group relative">
+              <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-primary/20 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              
+              <div className="relative p-8 rounded-2xl bg-surface-raised border border-border hover:border-border group-hover:shadow-[0_0_24px_var(--brand-orange-glow)] transition-all duration-300 min-h-[300px] flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                
+                <div className="relative">
+                  {/* Rating */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex gap-0.5">
+                      {[...Array(testimonials[current].stars)].map((_, i) => (
+                        <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <span className="text-xs font-semibold text-muted-foreground">5-star review</span>
+                  </div>
 
-              <blockquote
-                key={current}
-                className="text-sm text-foreground leading-relaxed mb-6"
-                style={{ animation: "fadeIn 0.4s ease" }}
-              >
-                &ldquo;{testimonials[current].quote}&rdquo;
-              </blockquote>
-
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-sm text-foreground">{testimonials[current].name}</p>
-                  <p className="text-xs text-muted-foreground">{testimonials[current].title}</p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={prev}
-                    className="w-8 h-8 rounded-lg bg-secondary border border-border flex items-center justify-center hover:border-primary transition-colors"
+                  {/* Quote */}
+                  <blockquote
+                    key={current}
+                    className="text-lg text-foreground leading-relaxed font-medium mb-6"
+                    style={{ animation: "fadeIn 0.4s ease" }}
                   >
-                    <ChevronLeft className="w-4 h-4 text-muted-foreground" />
-                  </button>
-                  <button
-                    onClick={next}
-                    className="w-8 h-8 rounded-lg bg-secondary border border-border flex items-center justify-center hover:border-primary transition-colors"
-                  >
-                    <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                  </button>
+                    &ldquo;{testimonials[current].quote}&rdquo;
+                  </blockquote>
                 </div>
-              </div>
 
-              {/* Dots */}
-              <div className="flex justify-center gap-1.5 mt-4">
-                {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrent(i)}
-                    className={`h-1.5 rounded-full transition-all ${i === current ? "bg-primary w-6" : "bg-border w-1.5"}`}
-                  />
-                ))}
+                {/* Author + Controls */}
+                <div className="relative space-y-4 pt-4 border-t border-border">
+                  <div>
+                    <p className="font-semibold text-foreground">{testimonials[current].name}</p>
+                    <p className="text-xs text-muted-foreground">{testimonials[current].title}</p>
+                  </div>
+
+                  {/* Navigation */}
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={prev}
+                        className="w-9 h-9 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center hover:bg-primary/25 hover:border-primary/50 transition-all group/btn"
+                      >
+                        <ChevronLeft className="w-4 h-4 text-primary group-hover/btn:translate-x-0.5 transition-transform" />
+                      </button>
+                      <button
+                        onClick={next}
+                        className="w-9 h-9 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center hover:bg-primary/25 hover:border-primary/50 transition-all group/btn"
+                      >
+                        <ChevronRight className="w-4 h-4 text-primary group-hover/btn:-translate-x-0.5 transition-transform" />
+                      </button>
+                    </div>
+
+                    {/* Dots */}
+                    <div className="flex justify-center gap-1.5">
+                      {testimonials.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrent(i)}
+                          className={`rounded-full transition-all duration-300 ${i === current ? "bg-primary w-7 h-2" : "bg-border w-2 h-2 hover:bg-muted-foreground"}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

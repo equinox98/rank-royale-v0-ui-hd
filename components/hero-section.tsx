@@ -163,6 +163,86 @@ export function HeroSection() {
               <p className="text-center text-xs text-muted-foreground">Free instant SEO power score</p>
             </div>
           </div>
+
+          {/* Right: Interactive Preview */}
+          <div className="relative h-full min-h-[500px]">
+            {/* Glow background */}
+            <div className="absolute -inset-10 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-transparent blur-3xl pointer-events-none" />
+            
+            {/* Preview card */}
+            <div className="absolute inset-0 rounded-3xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+              
+              <div className="relative h-full bg-surface-raised border border-border rounded-3xl p-8 shadow-2xl overflow-hidden">
+                {/* Header glow */}
+                <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+                
+                {/* Content */}
+                <div className="relative space-y-6 h-full flex flex-col">
+                  {/* Title */}
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">Battle Preview</h3>
+                    <p className="text-xs text-muted-foreground">Real-time SEO comparison</p>
+                  </div>
+
+                  {/* Score comparison */}
+                  <div className="grid grid-cols-3 gap-2 flex-1">
+                    {[
+                      { label: "Your Site", score: 68, color: "from-primary" },
+                      { label: "Competitor 1", score: 82, color: "from-cyan-500" },
+                      { label: "Competitor 2", score: 75, color: "from-blue-500" },
+                    ].map((item) => (
+                      <div key={item.label} className="flex flex-col items-center gap-2">
+                        <div className="relative w-16 h-16">
+                          <svg className="w-full h-full" viewBox="0 0 100 100">
+                            {/* Background circle */}
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="oklch(0.2 0 0)" strokeWidth="8" />
+                            {/* Progress circle */}
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="45"
+                              fill="none"
+                              stroke={item.color.includes("primary") ? "oklch(0.65 0.22 44)" : item.color}
+                              strokeWidth="8"
+                              strokeDasharray={`${2.827 * item.score} 282.7`}
+                              strokeLinecap="round"
+                              className="transition-all duration-1000"
+                              style={{
+                                transform: "rotate(-90deg)",
+                                transformOrigin: "50% 50%",
+                              }}
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-sm font-bold text-foreground">{item.score}</span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground text-center">{item.label}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Stats */}
+                  <div className="space-y-3 pt-4 border-t border-border">
+                    {[
+                      { label: "Backlinks", value: "1,240", delta: "-340" },
+                      { label: "Domain Authority", value: "42", delta: "-8" },
+                      { label: "Ranking Keywords", value: "156", delta: "-89" },
+                    ].map((stat) => (
+                      <div key={stat.label} className="flex justify-between items-center text-xs">
+                        <span className="text-muted-foreground">{stat.label}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-foreground">{stat.value}</span>
+                          <span className="text-destructive">{stat.delta}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

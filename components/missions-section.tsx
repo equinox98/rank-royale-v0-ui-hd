@@ -1,32 +1,40 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Zap, BarChart2, FileText, CheckCircle2 } from "lucide-react"
+import { Zap, Database, FileText, CheckCircle2, Gauge, Link2 } from "lucide-react"
 
 const missions = [
   {
-    icon: Zap,
+    icon: Gauge,
     title: "Improve page speed",
-    desc: "Currently loading in 4.2s. Goal: 1.5s",
+    desc: "Currently loading in 4.2s. Target: 1.5s for better rankings",
     pts: "+6 pts",
-    color: "text-yellow-400",
-    bg: "bg-yellow-400/10",
+    color: "text-amber-400",
+    bg: "from-amber-500/20 to-orange-500/10",
   },
   {
-    icon: BarChart2,
-    title: "Add FAQ schema",
-    desc: "Get rich results on Google search pages",
+    icon: Database,
+    title: "Add FAQ schema markup",
+    desc: "Unlock rich results and featured snippets on Google Search",
     pts: "+4 pts",
     color: "text-primary",
-    bg: "bg-primary/10",
+    bg: "from-primary/20 to-primary/5",
+  },
+  {
+    icon: Link2,
+    title: "Build high-quality backlinks",
+    desc: "Get 10+ authoritative backlinks from industry publications",
+    pts: "+12 pts",
+    color: "text-cyan-400",
+    bg: "from-cyan-500/20 to-blue-500/10",
   },
   {
     icon: FileText,
-    title: "Create new page about teeth whitening",
-    desc: "Capture high-intent search traffic",
+    title: "Create content for target keywords",
+    desc: "Write comprehensive guides for 5 high-intent search terms",
     pts: "+8 pts",
     color: "text-green-400",
-    bg: "bg-green-400/10",
+    bg: "from-green-500/20 to-emerald-500/10",
   },
 ]
 
@@ -51,9 +59,7 @@ export function MissionsSection() {
         background: "radial-gradient(ellipse 70% 50% at 50% 50%, oklch(0.18 0.04 42 / 0.15) 0%, transparent 70%)",
       }}
     >
-      {/* Background faded image */}
-      <div
-        className="absolute inset-0 opacity-5"
+      <div className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main%202v.png-sB0ZtS0ql1fW5ivEXJpI8jbfKhpxNP.jpeg')`,
           backgroundSize: "cover",
@@ -61,41 +67,65 @@ export function MissionsSection() {
         }}
       />
 
-      <div className="relative max-w-3xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground mb-3">Increase Your SEO Power</h2>
-          <p className="text-sm text-muted-foreground">Complete these active missions to jump ranks today.</p>
+      <div className="relative max-w-4xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-block mb-4 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-widest">
+            Action Items
+          </div>
+          <h2 className="text-4xl font-bold text-foreground mb-3">Increase Your SEO Power</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Complete these prioritized missions to improve your rankings and dominate the competition in your city.
+          </p>
         </div>
 
-        <div className="space-y-4">
+        {/* Missions grid */}
+        <div className="grid md:grid-cols-2 gap-4">
           {missions.map((mission, i) => {
             const Icon = mission.icon
             return (
               <div
                 key={mission.title}
-                className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/40 hover:bg-card/80 transition-all duration-300 group cursor-pointer"
+                className="group relative"
                 style={{
                   opacity: visible ? 1 : 0,
-                  transform: visible ? "translateX(0)" : "translateX(-30px)",
-                  transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
+                  transform: visible ? "translateY(0)" : "translateY(20px)",
+                  transition: `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`,
                 }}
               >
-                <div className={`w-10 h-10 rounded-full ${mission.bg} flex items-center justify-center flex-shrink-0`}>
-                  <Icon className={`w-5 h-5 ${mission.color}`} />
-                </div>
+                {/* Gradient border */}
+                <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-primary/20 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                
+                <div className="relative p-6 rounded-xl bg-surface-raised border border-border hover:border-border group-hover:shadow-[0_0_24px_var(--brand-orange-glow)] transition-all duration-300 group-hover:-translate-y-1 overflow-hidden h-full">
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${mission.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`} />
+                  
+                  {/* Content */}
+                  <div className="relative space-y-4 flex flex-col h-full">
+                    {/* Icon and header */}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className={`w-11 h-11 rounded-lg bg-gradient-to-br ${mission.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className={`w-6 h-6 ${mission.color}`} />
+                      </div>
+                      <span className="px-2.5 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-[0_0_12px_var(--brand-orange-glow)] whitespace-nowrap">
+                        {mission.pts}
+                      </span>
+                    </div>
 
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">
-                    {mission.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{mission.desc}</p>
-                </div>
+                    {/* Text */}
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {mission.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{mission.desc}</p>
+                    </div>
 
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-[0_0_10px_var(--brand-orange-glow)]">
-                    {mission.pts}
-                  </span>
-                  <CheckCircle2 className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    {/* Action */}
+                    <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+                      <CheckCircle2 className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">Mark as complete</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             )
