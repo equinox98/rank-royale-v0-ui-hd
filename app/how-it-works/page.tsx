@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
-import { CTA } from "@/components/cta-section"
+import { CtaSection } from "@/components/cta-section"
 import { ChevronRight, Globe, Zap, BarChart3, Trophy } from "lucide-react"
 
 const steps = [
@@ -221,7 +221,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA */}
-      <CTA />
+      <CtaSection />
     </main>
   )
 }
