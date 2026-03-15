@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
-import { CTA } from "@/components/cta-section"
+import { CtaSection } from "@/components/cta-section"
 import { Check, Zap, Users, Building2 } from "lucide-react"
 
 const plans = [
@@ -241,7 +241,7 @@ export default function PricingPage() {
       </section>
 
       {/* CTA */}
-      <CTA />
+      <CtaSection />
     </main>
   )
 }
