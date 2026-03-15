@@ -13,7 +13,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Rank Royale — Fight Your Competitors in Google',
   description: 'Compare your website with competitors and generate a shareable SEO battle report. Discover who wins the SEO battle in your city.',
-  generator: 'v0.app',
 }
 
 export default function RootLayout({

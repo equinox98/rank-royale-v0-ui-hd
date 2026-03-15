@@ -44,7 +44,7 @@ export function FaqSection() {
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <div
-              key={i}
+              key={faq.q}
               className={`rounded-xl border transition-all duration-300
                 ${open === i ? "bg-card border-primary/40" : "bg-secondary border-border hover:border-primary/30"}`}
             >

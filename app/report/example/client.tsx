@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { ShareModal } from "@/components/share-modal"
 import { ArrowLeft, Share2, Copy, Check, Globe, MapPin, Trophy, TrendingUp, AlertTriangle, CheckCircle2, Link as LinkIcon } from "lucide-react"
-import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip, AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer as RechartContainer } from "recharts"
+import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip, AreaChart, Area, XAxis, YAxis, CartesianGrid } from "recharts"
 
 function AnimatedNumber({ target, duration = 1800 }: { target: number; duration?: number }) {
   const [current, setCurrent] = useState(0)
@@ -168,8 +168,8 @@ export default function ExampleReportPage() {
                 { label: "Ranking Keywords", value: "156", icon: Trophy },
                 { label: "Backlinks", value: "1.24K", icon: LinkIcon },
                 { label: "Domain Authority", value: "42", icon: TrendingUp },
-              ].map((stat, i) => (
-                <div key={i} className="p-6 rounded-xl bg-surface-raised border border-border/50">
+              ].map((stat) => (
+                <div key={stat.label} className="p-6 rounded-xl bg-surface-raised border border-border/50">
                   <p className="text-xs text-muted-foreground mb-2">{stat.label}</p>
                   <p className="text-3xl font-black text-foreground">{stat.value}</p>
                 </div>
@@ -189,7 +189,7 @@ export default function ExampleReportPage() {
                 { rank: 4, site: "dentalhealth.london", score: 71 },
               ].map((item, i) => (
                 <div
-                  key={i}
+                  key={`${item.rank}-${item.site}`}
                   className={`flex items-center justify-between p-4 rounded-lg transition-all ${
                     item.badge ? "bg-primary/15 border border-primary/40" : "bg-muted/50"
                   }`}
@@ -234,7 +234,7 @@ export default function ExampleReportPage() {
                 { severity: "Low", issue: "Outdated copyright year in footer", action: "Update to 2024" },
               ].map((item, i) => (
                 <div
-                  key={i}
+                  key={`${item.severity}-${item.issue}`}
                   className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border/50"
                   style={{
                     opacity: 1,
@@ -270,7 +270,7 @@ export default function ExampleReportPage() {
                 { title: "Create content for 'emergency dentist'", points: 6 },
               ].map((mission, i) => (
                 <div
-                  key={i}
+                  key={mission.title}
                   className="flex items-center justify-between p-4 rounded-lg bg-muted/50 border border-border/50 hover:border-primary/40 transition-colors group"
                   style={{
                     opacity: 1,

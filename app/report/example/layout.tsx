@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import ExampleReportPage from "./client"
 
 export const metadata: Metadata = {
   title: "SEO Battle Report - londondentalcare.co.uk | Rank Royale",
@@ -41,5 +40,5 @@ export default function ReportLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <ExampleReportPage />
+  return children
 }

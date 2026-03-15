@@ -116,7 +116,7 @@ export function Footer() {
               { label: "Status", href: "#" },
             ].map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -137,7 +137,7 @@ export function Footer() {
               { label: "Partners", href: "#" },
             ].map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -158,7 +158,7 @@ export function Footer() {
               { label: "Impressum", href: "#" },
             ].map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -174,9 +174,9 @@ export function Footer() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground text-center md:text-left">
             © 2026 Rank Royale. Built by{" "}
-            <a href="#" className="text-primary hover:underline">
+            <Link href="/about" className="text-primary hover:underline">
               Equinox Dynamics LDA
-            </a>
+            </Link>
             .
           </p>
 
