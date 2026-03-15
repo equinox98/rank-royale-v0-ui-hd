@@ -36,47 +36,55 @@ export function Navbar() {
         {/* Center Nav - Desktop */}
         <nav className="hidden lg:flex items-center gap-8">
           <Link 
-            href="#features" 
+            href="/#features" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
           >
             Features
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
           </Link>
           <Link 
-            href="#how-it-works" 
+            href="/how-it-works" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
           >
             How It Works
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
           </Link>
           <Link 
-            href="/report" 
+            href="/pricing" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
+          >
+            Pricing
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+          </Link>
+          <Link 
+            href="/report/example" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
           >
             Example Report
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
           </Link>
           <Link 
-            href="/dashboard" 
+            href="/about" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
           >
-            Dashboard
+            About
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
           </Link>
         </nav>
 
         {/* Right side */}
         <div className="flex items-center gap-3 z-10">
-          <button className="hidden md:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-surface-raised">
-            <Globe className="w-4 h-4" />
-            EN
-            <ChevronDown className="w-3 h-3" />
-          </button>
           <Link
-            href="#hero"
+            href="/login"
+            className="hidden md:inline-flex text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Login
+          </Link>
+          <Link
+            href="/#hero"
             className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-primary to-orange-600 text-primary-foreground text-sm font-semibold hover:opacity-95 transition-all shadow-[0_0_16px_var(--brand-orange-glow)] hover:shadow-[0_0_24px_var(--brand-orange-glow)]"
           >
-            Start
+            Run SEO Battle
           </Link>
 
           {/* Mobile menu button */}
@@ -94,32 +102,46 @@ export function Navbar() {
         <div className="lg:hidden border-t border-border bg-surface-soft">
           <nav className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
             <Link 
-              href="#features" 
+              href="/#features" 
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-raised rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
-              href="#how-it-works" 
+              href="/how-it-works" 
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-raised rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               How It Works
             </Link>
             <Link 
-              href="/report" 
+              href="/pricing" 
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-raised rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Pricing
+            </Link>
+            <Link 
+              href="/report/example" 
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-raised rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Example Report
             </Link>
             <Link 
-              href="/dashboard" 
+              href="/about" 
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-raised rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Dashboard
+              About
+            </Link>
+            <Link 
+              href="/login" 
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-raised rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Login
             </Link>
           </nav>
         </div>
