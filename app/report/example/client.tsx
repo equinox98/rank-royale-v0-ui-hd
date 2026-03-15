@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
+import { ShareModal } from "@/components/share-modal"
 import { ArrowLeft, Share2, Copy, Check, Globe, MapPin, Trophy, TrendingUp, AlertTriangle, CheckCircle2, Link as LinkIcon } from "lucide-react"
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip, AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer as RechartContainer } from "recharts"
 
@@ -42,6 +43,7 @@ function ProgressBar({ value, max = 100, delay = 0 }: { value: number; max?: num
 
 export default function ExampleReportPage() {
   const [copied, setCopied] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -61,23 +63,24 @@ export default function ExampleReportPage() {
             <span className="text-sm font-medium">Back to Home</span>
           </Link>
           <button
-            onClick={handleCopyLink}
+            onClick={() => setShareOpen(true)}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/15 text-primary hover:bg-primary/25 transition-all text-sm font-medium"
           >
-            {copied ? (
-              <>
-                <Check className="w-4 h-4" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Share2 className="w-4 h-4" />
-                Share
-              </>
-            )}
+            <Share2 className="w-4 h-4" />
+            Share
           </button>
         </div>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={shareOpen}
+        onClose={() => setShareOpen(false)}
+        reportUrl={typeof window !== "undefined" ? window.location.href : "rankroyale.tech/report/example"}
+        reportId="RR-UK-2024-0847"
+        seoScore={68}
+        domain="londondentalcare.co.uk"
+      />
 
       {/* Report content */}
       <div className="py-12 px-6 bg-gradient-to-b from-background to-surface-soft">

@@ -162,4 +162,80 @@
       box-shadow: 0 0 30px var(--brand-orange-glow);
     }
   }
+
+  /* Micro interactions */
+  @keyframes copy-pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes button-glow {
+    0% {
+      box-shadow: 0 0 10px var(--brand-orange-glow);
+    }
+    50% {
+      box-shadow: 0 0 20px var(--brand-orange-glow);
+    }
+    100% {
+      box-shadow: 0 0 10px var(--brand-orange-glow);
+    }
+  }
+
+  @keyframes progress-fill {
+    from {
+      width: 0%;
+      opacity: 0;
+    }
+    to {
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes table-row-highlight {
+    from {
+      background-color: transparent;
+    }
+    to {
+      background-color: oklch(0.2 0 0 / 0.5);
+    }
+  }
+
+  @keyframes score-increment {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Bounce animation for scroll indicator */
+  @keyframes bounce-soft {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+
+  /* Shimmer for loading states */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
 }
