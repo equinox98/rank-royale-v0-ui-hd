@@ -1,39 +1,60 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Zap, ArrowRight, Plus } from "lucide-react"
 import Link from "next/link"
+
+function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const start = Date.now()
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.round(eased * target))
+      if (progress >= 1) clearInterval(interval)
+    }, 16)
+    return () => clearInterval(interval)
+  }, [target, duration])
+
+  return <>{count.toLocaleString()}</>
+}
 
 export function HeroSection() {
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
   const [niche, setNiche] = useState("")
   const [competitors, setCompetitors] = useState(["", "", ""])
+  const [focusedInput, setFocusedInput] = useState<string | null>(null)
 
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
       style={{
-        background:
-          "radial-gradient(ellipse 80% 60% at 70% 40%, oklch(0.22 0.06 42 / 0.25) 0%, transparent 60%), oklch(0.1 0 0)",
+        background: "linear-gradient(180deg, oklch(0.08 0 0) 0%, oklch(0.1 0.02 42 / 0.08) 50%, oklch(0.08 0 0) 100%)",
       }}
     >
-      {/* Background image overlay */}
+      {/* Darker background image overlay with stronger gradient */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main%202v.png-sB0ZtS0ql1fW5ivEXJpI8jbfKhpxNP.jpeg')`,
           backgroundSize: "cover",
           backgroundPosition: "center right",
-          maskImage: "linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)",
+          maskImage: "linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%)",
         }}
       />
 
-      {/* Grid overlay */}
+      {/* Strong radial gradient overlay to darken further */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/98 to-background pointer-events-none" />
+
+      {/* Subtle grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
             "linear-gradient(oklch(0.97 0 0) 1px, transparent 1px), linear-gradient(90deg, oklch(0.97 0 0) 1px, transparent 1px)",
@@ -45,9 +66,12 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: copy */}
           <div className="space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-raised border border-border text-xs font-medium text-primary">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            {/* Premium Live Badge */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-primary/5 border border-primary/30 text-xs font-semibold text-primary backdrop-blur-sm">
+              <span className="relative w-2 h-2 rounded-full bg-primary">
+                <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
+                <span className="absolute inset-0 rounded-full bg-primary opacity-50" />
+              </span>
               LIVE SEO ARENA
             </div>
 
@@ -69,10 +93,26 @@ export function HeroSection() {
               full battle report in seconds.
             </p>
 
+            {/* Live Product Stats */}
+            <div className="flex items-center gap-6 pt-4 border-t border-border/50">
+              {[
+                { value: 4213, label: "SEO Battles Today" },
+                { value: 127, label: "Live Scans" },
+                { value: 23481, label: "Reports Generated" },
+              ].map((stat, i) => (
+                <div key={i} className="space-y-1">
+                  <div className="text-sm font-bold text-primary">
+                    <AnimatedCounter target={stat.value} duration={2000 + i * 200} />
+                  </div>
+                  <div className="text-xs text-muted-foreground">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
             {/* Simple CTA row */}
             <div className="flex items-center gap-4 flex-wrap">
               <Link
-                href="/report"
+                href="/report/example"
                 className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:border-muted-foreground transition-colors"
               >
                 View Example Report
@@ -90,7 +130,7 @@ export function HeroSection() {
           {/* Right: Audit Form */}
           <div className="relative">
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-primary/20 to-transparent pointer-events-none" />
-            <div className="relative bg-card border border-border rounded-2xl p-6 shadow-2xl space-y-4">
+            <div className="relative bg-card border border-border rounded-2xl p-6 shadow-2xl space-y-4 hover:shadow-[0_0_32px_rgba(249,115,22,0.15)] transition-all duration-300">
               <div className="space-y-1">
                 <h2 className="text-lg font-bold text-foreground">Run SEO Battle</h2>
                 <p className="text-xs text-muted-foreground">Enter your website and competitors to get started</p>
@@ -103,8 +143,10 @@ export function HeroSection() {
                   type="url"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
+                  onFocus={() => setFocusedInput("url")}
+                  onBlur={() => setFocusedInput(null)}
                   placeholder="https://yourwebsite.com"
-                  className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                  className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:shadow-[0_0_12px_var(--brand-orange-glow)] transition-all"
                 />
               </div>
 
@@ -116,8 +158,10 @@ export function HeroSection() {
                     type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
+                    onFocus={() => setFocusedInput("location")}
+                    onBlur={() => setFocusedInput(null)}
                     placeholder="London, UK"
-                    className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:shadow-[0_0_12px_var(--brand-orange-glow)] transition-all"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -126,8 +170,10 @@ export function HeroSection() {
                     type="text"
                     value={niche}
                     onChange={(e) => setNiche(e.target.value)}
+                    onFocus={() => setFocusedInput("niche")}
+                    onBlur={() => setFocusedInput(null)}
                     placeholder="Dentists"
-                    className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:shadow-[0_0_12px_var(--brand-orange-glow)] transition-all"
                   />
                 </div>
               </div>
@@ -147,14 +193,16 @@ export function HeroSection() {
                       next[i] = e.target.value
                       setCompetitors(next)
                     }}
+                    onFocus={() => setFocusedInput(`competitor-${i}`)}
+                    onBlur={() => setFocusedInput(null)}
                     placeholder={`Competitor ${i + 1} URL`}
-                    className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-3 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:shadow-[0_0_12px_var(--brand-orange-glow)] transition-all"
                   />
                 ))}
               </div>
 
               {/* CTA */}
-              <button className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-bold text-sm hover:opacity-90 transition-all shadow-[0_0_20px_var(--brand-orange-glow)] hover:shadow-[0_0_32px_var(--brand-orange-glow)] group flex items-center justify-center gap-2">
+              <button className="w-full py-3 rounded-lg bg-gradient-to-r from-primary to-orange-600 text-primary-foreground font-bold text-sm hover:opacity-95 active:scale-95 transition-all shadow-[0_0_20px_var(--brand-orange-glow)] hover:shadow-[0_0_32px_var(--brand-orange-glow)] group flex items-center justify-center gap-2">
                 <Zap className="w-4 h-4" />
                 Run SEO Battle
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -163,91 +211,11 @@ export function HeroSection() {
               <p className="text-center text-xs text-muted-foreground">Free instant SEO power score</p>
             </div>
           </div>
-
-          {/* Right: Interactive Preview */}
-          <div className="relative h-full min-h-[500px]">
-            {/* Glow background */}
-            <div className="absolute -inset-10 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-transparent blur-3xl pointer-events-none" />
-            
-            {/* Preview card */}
-            <div className="absolute inset-0 rounded-3xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
-              
-              <div className="relative h-full bg-surface-raised border border-border rounded-3xl p-8 shadow-2xl overflow-hidden">
-                {/* Header glow */}
-                <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-                
-                {/* Content */}
-                <div className="relative space-y-6 h-full flex flex-col">
-                  {/* Title */}
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground mb-2">Battle Preview</h3>
-                    <p className="text-xs text-muted-foreground">Real-time SEO comparison</p>
-                  </div>
-
-                  {/* Score comparison */}
-                  <div className="grid grid-cols-3 gap-2 flex-1">
-                    {[
-                      { label: "Your Site", score: 68, color: "from-primary" },
-                      { label: "Competitor 1", score: 82, color: "from-cyan-500" },
-                      { label: "Competitor 2", score: 75, color: "from-blue-500" },
-                    ].map((item) => (
-                      <div key={item.label} className="flex flex-col items-center gap-2">
-                        <div className="relative w-16 h-16">
-                          <svg className="w-full h-full" viewBox="0 0 100 100">
-                            {/* Background circle */}
-                            <circle cx="50" cy="50" r="45" fill="none" stroke="oklch(0.2 0 0)" strokeWidth="8" />
-                            {/* Progress circle */}
-                            <circle
-                              cx="50"
-                              cy="50"
-                              r="45"
-                              fill="none"
-                              stroke={item.color.includes("primary") ? "oklch(0.65 0.22 44)" : item.color}
-                              strokeWidth="8"
-                              strokeDasharray={`${2.827 * item.score} 282.7`}
-                              strokeLinecap="round"
-                              className="transition-all duration-1000"
-                              style={{
-                                transform: "rotate(-90deg)",
-                                transformOrigin: "50% 50%",
-                              }}
-                            />
-                          </svg>
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-sm font-bold text-foreground">{item.score}</span>
-                          </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground text-center">{item.label}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Stats */}
-                  <div className="space-y-3 pt-4 border-t border-border">
-                    {[
-                      { label: "Backlinks", value: "1,240", delta: "-340" },
-                      { label: "Domain Authority", value: "42", delta: "-8" },
-                      { label: "Ranking Keywords", value: "156", delta: "-89" },
-                    ].map((stat) => (
-                      <div key={stat.label} className="flex justify-between items-center text-xs">
-                        <span className="text-muted-foreground">{stat.label}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-foreground">{stat.value}</span>
-                          <span className="text-destructive">{stat.delta}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground animate-[bounce-soft_2s_ease-in-out_infinite]">
         <div className="w-5 h-8 rounded-full border border-border flex items-start justify-center pt-1.5">
           <div className="w-1 h-2 rounded-full bg-muted-foreground" />
         </div>
