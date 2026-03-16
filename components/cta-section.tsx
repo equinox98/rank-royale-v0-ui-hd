@@ -110,13 +110,13 @@ export function Footer() {
           <h3 className="text-xs font-bold uppercase tracking-widest text-foreground mb-4">Resources</h3>
           <nav className="space-y-3">
             {[
-              { label: "Blog", href: "#" },
-              { label: "SEO Guides", href: "#" },
-              { label: "API Docs", href: "#" },
-              { label: "Status", href: "#" },
+              { label: "Blog", href: "#blog" },
+              { label: "SEO Guides", href: "#guides" },
+              { label: "API Docs", href: "#api" },
+              { label: "Status", href: "#status" },
             ].map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -132,12 +132,12 @@ export function Footer() {
           <nav className="space-y-3">
             {[
               { label: "About", href: "/about" },
-              { label: "Contact", href: "#" },
-              { label: "Careers", href: "#" },
-              { label: "Partners", href: "#" },
+              { label: "Contact", href: "#contact" },
+              { label: "Careers", href: "#careers" },
+              { label: "Partners", href: "#partners" },
             ].map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -155,10 +155,10 @@ export function Footer() {
               { label: "Privacy", href: "/privacy" },
               { label: "Terms", href: "/terms" },
               { label: "Cookies", href: "/cookies" },
-              { label: "Impressum", href: "#" },
+              { label: "Impressum", href: "#impressum" },
             ].map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
